@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
-    private var isGone = false
+
     private lateinit var textView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,18 +16,16 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.titleTextView)
         button.setOnClickListener{
             textView.visibility = View.GONE
-            isGone = true
         }
-        savedInstanceState?.let {
-            isGone = savedInstanceState.getBoolean("isGone")
-            if (isGone)
-                textView.visibility = View.GONE
-        }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("isGone", isGone)
+        outState.putInt("key",textView.visibility)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        textView.visibility = savedInstanceState.getInt("key")
     }
 }
