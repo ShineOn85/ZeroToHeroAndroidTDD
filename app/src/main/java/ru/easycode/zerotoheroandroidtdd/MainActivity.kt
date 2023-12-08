@@ -8,6 +8,7 @@ import android.widget.TextView
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
+    val count: Count = Count.Base(2)
     private lateinit var textView: TextView
     private var number = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,19 +18,8 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.countTextView)
         textView.text = number.toString()
         button.setOnClickListener {
-            number += 2
-            textView.text = number.toString()
+            textView.text = count.increment(textView.text.toString())
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("key", number)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        textView.text = savedInstanceState.getInt("key").toString()
-        number = savedInstanceState.getInt("key")
-    }
 }
